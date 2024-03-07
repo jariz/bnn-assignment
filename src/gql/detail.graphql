@@ -1,0 +1,34 @@
+query Detail($name: String!) {
+    pokemon(name: $name) {
+        name
+        types {
+            type {
+                name
+            }
+            slot
+        }
+        abilities {
+            ability {
+                name
+            }
+        }
+        stats {
+            base_stat
+            effort
+            stat {
+                name
+            }
+        }
+        weight
+
+        held_items {
+            item {
+                name
+            }
+        }
+        sprites {
+            front_default
+            back_default
+        }
+    }
+}

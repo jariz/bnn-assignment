@@ -262,6 +262,13 @@ export type VersionGroupDetail = {
   version_group?: Maybe<BaseName>;
 };
 
+export type DetailQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type DetailQuery = { __typename?: 'Query', pokemon?: { __typename?: 'Pokemon', name?: string | null, weight?: number | null, types?: Array<{ __typename?: 'Type', slot?: number | null, type?: { __typename?: 'BaseName', name?: string | null } | null } | null> | null, abilities?: Array<{ __typename?: 'Ability', ability?: { __typename?: 'BaseName', name?: string | null } | null } | null> | null, forms?: Array<{ __typename?: 'BaseName', name?: string | null } | null> | null, stats?: Array<{ __typename?: 'Stat', base_stat?: number | null, effort?: number | null, stat?: { __typename?: 'BaseName', name?: string | null } | null } | null> | null, held_items?: Array<{ __typename?: 'HeldItem', item?: { __typename?: 'BaseName', name?: string | null } | null } | null> | null, sprites?: { __typename?: 'Sprite', front_default?: string | null, back_default?: string | null } | null } | null };
+
 export type OverviewQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -271,6 +278,44 @@ export type OverviewQueryVariables = Exact<{
 export type OverviewQuery = { __typename?: 'Query', pokemons?: { __typename?: 'PokemonList', count?: number | null, nextOffset?: number | null, results?: Array<{ __typename?: 'PokemonItem', id?: number | null, name?: string | null, image?: string | null, dreamworld?: string | null } | null> | null } | null };
 
 
+export const DetailDocument = gql`
+    query Detail($name: String!) {
+  pokemon(name: $name) {
+    name
+    types {
+      type {
+        name
+      }
+      slot
+    }
+    abilities {
+      ability {
+        name
+      }
+    }
+    forms {
+      name
+    }
+    stats {
+      base_stat
+      effort
+      stat {
+        name
+      }
+    }
+    weight
+    held_items {
+      item {
+        name
+      }
+    }
+    sprites {
+      front_default
+      back_default
+    }
+  }
+}
+    `;
 export const OverviewDocument = gql`
     query Overview($limit: Int, $offset: Int) {
   pokemons(limit: $limit, offset: $offset) {
@@ -288,6 +333,9 @@ export const OverviewDocument = gql`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    Detail(variables: DetailQueryVariables, options?: C): Promise<DetailQuery> {
+      return requester<DetailQuery, DetailQueryVariables>(DetailDocument, variables, options) as Promise<DetailQuery>;
+    },
     Overview(variables?: OverviewQueryVariables, options?: C): Promise<OverviewQuery> {
       return requester<OverviewQuery, OverviewQueryVariables>(OverviewDocument, variables, options) as Promise<OverviewQuery>;
     }
