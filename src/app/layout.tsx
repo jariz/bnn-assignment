@@ -22,7 +22,7 @@ export default function RootLayout({
                     <nav className="bg-primary py-4">
                         <div className="container">
                             <Link href="/" className="flex items-center gap-3 font-bold text-white">
-                                <Image width={64} height={128} alt="A Pokédex" src="/logo.webp" className="w-12" />
+                                <Image width={48} height={36} alt="A Pokédex" src="/logo.webp" className="w-12" />
                                 BNN Pokédex
                             </Link>
                         </div>
