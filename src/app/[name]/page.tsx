@@ -61,7 +61,7 @@ export default async function DetailPage({ params: { name } }: { params: { name:
                 <h2 className={cn('mb-2 mt-4 text-2xl ', pressStart2P.className)}>Stats</h2>
                 <div className="flex flex-col gap-1 text-gray-500">
                     {pokemon.stats?.map(stat => (
-                        <p>
+                        <p key={stat?.stat?.name}>
                             {stat?.stat?.name}: {stat?.base_stat}
                         </p>
                     ))}
