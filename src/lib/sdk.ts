@@ -1,4 +1,3 @@
-import 'server-only';
 import { getSdk, type Requester } from '@/generated/api';
 import { type DocumentNode } from 'graphql';
 import { cache } from 'react';
